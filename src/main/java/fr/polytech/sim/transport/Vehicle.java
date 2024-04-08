@@ -12,7 +12,8 @@ import java.util.Set;
 public abstract class Vehicle implements MobileObject {
 
     private final Logger logger = new ConsoleLogger("Vehicle");
-    protected final Set<MobileObject> components = new HashSet<>();
+//    protected final Set<MobileObject> components = new HashSet<>();
+    protected final arraylist<MobileObject> components = new ArrayList<>();
 
     /**
      * Force applied to push the vehicle.
@@ -42,6 +43,7 @@ public abstract class Vehicle implements MobileObject {
         this.logger.log("Velocity %.2f Km/h.", velocity);
         return velocity;
     }
+
 
     /**
      * Calculate and return vehicle's mass as the sum of individual masses of
