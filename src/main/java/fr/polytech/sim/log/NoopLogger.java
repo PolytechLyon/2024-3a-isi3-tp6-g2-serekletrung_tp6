@@ -5,6 +5,9 @@ package fr.polytech.sim.log;
  */
 public class NoopLogger implements Logger {
 
+    NoopLogger() {
+    }
+
     public void log(String format, Object... args) {
         // Do nothing
     }
