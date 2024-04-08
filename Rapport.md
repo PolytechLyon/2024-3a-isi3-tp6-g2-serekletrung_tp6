@@ -108,4 +108,9 @@ public abstract class LoggerDecorator implements Logger {
 ```
 ## Exercices 8
 
+La classe Context suit le patron de conception Façade vis-à-vis de l'outil ServiceLoader:
+Comme dit dans le cours, la classe Context propose une interface simplifiée de ServiceLoader, avec un ensemble restreint de ses fonctionnalités.
+
+Oui, il est possible d'avoir plusieurs lignes dans fr.polytech.sim.cycling.Bike, cependant, seule la première sera prise en compte dans notre cas.
+La première ligne correspond en fait à la classe à injecter lorsque la classe Bike est demandé.
 
