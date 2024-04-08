@@ -25,6 +25,35 @@ Finalement, on déclare un accesseur/getteur public getInstanc() qui retourne l'
 Clock, on utilise la méthode getInstance() pour récupérer l'instance de la classe Clock.
 
 ## Exercices 4
+Les classes `Bike` et `Wheel` n'appartiennent pas au même paquetage. La classe Bike est dans le paquetage `fr.polytech.sim.cycling` tandis que la classe Wheel est dans le paquetage `fr.polytech.sim.transport`.  La classe `Wheel` est utilisée dans le constructeur de la classe `SimpleBike` (qui est une sous-classe de Bike). C'est une dépendance directe. Cependant, cette dépendance ne respecte pas le principe de séparation des préoccupations car la classe `Wheel` est dans un paquetage différent de `Bike`.  La classe Wheel utilise la méthode `getPush()` de la classe `Bike`. Cependant, cette méthode est déjà présente dans la classe `Vehicle` qui est une superclasse de `Bike`. La classe `Vehicle` est dans le même paquetage que `Wheel`, ce qui signifie qu'il y a déjà une abstraction de la classe `Bike` qui isole cette fonctionnalité.  Pour casser la dépendance cyclique entre les classes `Bike` et `Wheel`, nous pouvons faire en sorte que `Wheel` dépende de `Vehicle` plutôt que de `Bike`. Pour ce faire, nous devons modifier le constructeur de `Wheel` pour qu'il prenne une instance de `Vehicle` plutôt qu'une instance de `Bike`.  Voici comment nous pourrions modifier la classe `Wheel` : 
+
+```java
+package fr.polytech.sim.transport;
+
+public class Wheel extends MobileObject {
+
+    private Vehicle vehicle;
+
+    public Wheel(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+}
+```
+Et voici comment nous pourrions modifier la classe `SimpleBike` :
+
+```java
+package fr.polytech.sim.cycling;
+
+import fr.polytech.sim.transport.Wheel;
+
+public class SimpleBike extends Bike {
+
+    public SimpleBike() {
+        components.add(new Wheel(this));
+        components.add(new Wheel(this));
+    }
+}
+```
 
 ## Exercices 5
 
@@ -39,6 +68,44 @@ le patron Singleton pour s'assurer qu'il n'y ait qu'une seule instance de Logger
 
 ## Exercices 7
 
+On implémente les classes `LoggerDecorator` et `TimestampedLoggerDecorator` comme suit : 
+    
+```java
+package fr.polytech.sim.log;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class TimestampedLoggerDecorator extends LoggerDecorator {
+
+    public TimestampedLoggerDecorator(Logger logger) {
+        super(logger);
+    }
+
+    @Override
+    public void log(String message) {
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        logger.log(timestamp + " - " + message);
+    }
+}
+```
+
+```java
+package fr.polytech.sim.log;
+
+public abstract class LoggerDecorator implements Logger {
+    protected Logger logger;
+
+    public LoggerDecorator(Logger logger) {
+        this.logger = logger;
+    }
+
+    @Override
+    public void log(String message) {
+        logger.log(message);
+    }
+}
+```
 ## Exercices 8
 
 

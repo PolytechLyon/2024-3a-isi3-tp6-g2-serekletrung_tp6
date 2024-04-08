@@ -16,21 +16,21 @@ public class Wheel implements MobileObject {
 
     private final Logger logger = LoggerCreator.getLoggerCreator().create("Wheel");
     private final Clock clock = Clock.getInstance();
-    private final Bike drive;
+    private final Vehicle vehicle;
 
     /**
      * Constructor.
      *
      * @param drive  the object providing push power.
      */
-    public Wheel(Bike drive) {
-        Objects.requireNonNull(drive, "Bike must not be null.");
-        this.drive = drive;
+    public Wheel(Vehicle vehicle) {
+        Objects.requireNonNull(drive, "Vehicle must not be null.");
+        this.vehicle = vehicle;
     }
 
     @Override
     public double getVelocity() {
-        final double acceleration = this.drive.getPush() / this.getMass();
+        final double acceleration = this.vehicle.getPush() / this.getMass();
         final int time = this.clock.getTime();
         double velocity = time * acceleration;
         this.logger.log("Velocity %.2f Km/h at T %d s.", velocity, time);
