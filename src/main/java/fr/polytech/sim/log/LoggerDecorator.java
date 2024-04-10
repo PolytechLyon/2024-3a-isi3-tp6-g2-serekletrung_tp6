@@ -1,6 +1,6 @@
 package fr.polytech.sim.log;
 
-public abstract class LoggerDecorator implements Logger {
+public class LoggerDecorator implements Logger {
     protected Logger logger;
 
     public LoggerDecorator(Logger logger) {
@@ -8,7 +8,7 @@ public abstract class LoggerDecorator implements Logger {
     }
 
     @Override
-    public void log(String message) {
+    public void log(String message, Object... args) {
         logger.log(message);
     }
 }

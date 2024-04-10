@@ -77,15 +77,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TimestampedLoggerDecorator extends LoggerDecorator {
-
     public TimestampedLoggerDecorator(Logger logger) {
         super(logger);
     }
 
     @Override
-    public void log(String message) {
+    public void log(String format, Object... args) {
+        // Add timestamp to the log
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        logger.log(timestamp + " - " + message);
+
+        // Format to [dd/mm/yyy | hh:mm:ss] - message
+        timestamp = "[" + timestamp.substring(0, 10) + " | " + timestamp.substring(11, 19) + "]";
+        logger.log(timestamp + " - " + format, args);
     }
 }
 ```
@@ -106,11 +109,46 @@ public abstract class LoggerDecorator implements Logger {
     }
 }
 ```
-## Exercices 8
+
+Il nous suffit maintenant d'instancier un objet de type `TimestampedLoggerDecorator` et de lui passer un objet de type `Logger` pour obtenir un logger avec des timestamps. 
+example : 
+```java
+private final Logger logger = new TimestampedLoggerDecorator(LoggerCreator.getLoggerCreator().create("Vehicle"));
+```
+
+## Exercise 8
 
 La classe Context suit le patron de conception Façade vis-à-vis de l'outil ServiceLoader:
 Comme dit dans le cours, la classe Context propose une interface simplifiée de ServiceLoader, avec un ensemble restreint de ses fonctionnalités.
 
 Oui, il est possible d'avoir plusieurs lignes dans fr.polytech.sim.cycling.Bike, cependant, seule la première sera prise en compte dans notre cas.
 La première ligne correspond en fait à la classe à injecter lorsque la classe Bike est demandé.
+
+## Exercise 9
+
+La méthode injectAll() retourne un Iterable. Cela suggère l'utilisation du patron de conception "Itérateur". Ce patron de conception fournit un moyen d'accéder aux éléments d'un objet agrégat de manière séquentielle sans exposer sa représentation sous-jacente.  
+Voici comment nous pourrions implémenter la méthode injectAll() : 
+
+```java
+
+public static <T> Iterable<T> injectAll(Class<T> type) {
+    return ServiceLoader.load(type);
+}
+
+```
+
+Pour utiliser cette méthode dans la simulation de vélo, on peut modifier la classe BikeSimulator pour itérer sur tous les vélos retournés par Context.injectAll(Bike.class).
+
+```java
+public class BikeSimulator implements Simulation {
+    private final Logger logger = new TimestampedLoggerDecorator(LoggerCreator.getLoggerCreator().create("BikeSimulator"));
+
+    public void run() {
+        for (Bike bike : Context.injectAll(Bike.class)) {
+            this.logger.log("Bike's speed %.2f Km/h.", bike.getVelocity());
+            this.logger.log("Bike's mass %.2f Kg.", bike.getMass());
+        }
+    }
+}
+```
 
