@@ -2,7 +2,7 @@ package fr.polytech.sim.log;
 
 public interface LoggerCreator {
 
-    LoggerCreator INSTANCE = new ConsoleLogCreator();
+    LoggerCreator INSTANCE = new FileLogCreator();
 
     Logger create(String loggerName);
 

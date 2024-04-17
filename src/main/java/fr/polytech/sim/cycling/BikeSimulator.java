@@ -4,6 +4,7 @@ import fr.polytech.sim.Simulation;
 import fr.polytech.sim.log.FileLogger;
 import fr.polytech.sim.log.Logger;
 import fr.polytech.sim.log.LoggerCreator;
+import fr.polytech.sim.log.FileLogCreator;
 import fr.polytech.sim.log.TimestampedLoggerDecorator;
 import fr.polytech.sim.utils.Context;
 
