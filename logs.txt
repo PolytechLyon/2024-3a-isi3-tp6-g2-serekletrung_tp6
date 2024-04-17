@@ -1,0 +1,3 @@
+
+BikeSimulator	Bike's speed 35,00 Km/h.
+BikeSimulator	Bike's mass 20,00 Kg.
