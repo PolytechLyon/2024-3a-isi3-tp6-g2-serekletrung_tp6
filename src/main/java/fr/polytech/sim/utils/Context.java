@@ -30,12 +30,11 @@ public class Context {
      * if a service provider exists for that class. If no such a provider
      * exists, the method return an empty iterator.
      *
-     * @param klass expected injection type
+     * @param type expected injection type
      * @return      an iterator over all instances provided by service provider
      * @param <T>   expected instance type
      */
-    public static <T> Iterator<T> injectAll(Class<T> klass) {
-        /* TODO: implement the right logic */
-        throw new UnsupportedOperationException("Method not implemented");
+    public static <T> Iterable<T> injectAll(Class<T> type) {
+        return ServiceLoader.load(type);
     }
 }

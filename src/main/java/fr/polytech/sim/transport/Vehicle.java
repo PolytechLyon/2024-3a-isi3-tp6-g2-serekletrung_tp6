@@ -2,6 +2,9 @@ package fr.polytech.sim.transport;
 
 import fr.polytech.sim.log.ConsoleLogger;
 import fr.polytech.sim.log.Logger;
+import fr.polytech.sim.log.LoggerCreator;
+import fr.polytech.sim.log.TimestampedLoggerDecorator;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -11,7 +14,7 @@ import java.util.Set;
  */
 public abstract class Vehicle implements MobileObject {
 
-    private final Logger logger = new ConsoleLogger("Vehicle");
+    private final Logger logger = new TimestampedLoggerDecorator(LoggerCreator.getLoggerCreator().create("Vehicle"));
     protected final Set<MobileObject> components = new HashSet<>();
 
     /**

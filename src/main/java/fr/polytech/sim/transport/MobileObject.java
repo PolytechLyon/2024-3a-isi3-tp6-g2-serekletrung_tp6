@@ -1,4 +1,4 @@
-package fr.polytech.sim.transport;
+    package fr.polytech.sim.transport;
 
 /**
  * Any object with velocity and mass.
